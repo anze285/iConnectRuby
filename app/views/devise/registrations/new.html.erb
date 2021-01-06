@@ -1,0 +1,31 @@
+<div class="registration-main m-4 p-4">
+    <div class="registration-content">
+        <h1 class="instantgram pb-4 mb-4 big-text">iConnect</h1>
+        <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+        <%= render "devise/shared/error_messages", resource: resource %>
+
+        <div class="field">
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email", :class => "form-control mb-1 w-75 mx-auto border bg-fafafa fs-1 py-2" %>
+        </div>
+
+        <div class="field">
+          <%= f.password_field :password, autocomplete: "new-password", placeholder: "Password", :class => "form-control mb-1 w-75 mx-auto border bg-fafafa fs-1 py-2" %>
+        </div>
+
+        <div class="field">
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm password", :class => "form-control mb-1 w-75 mx-auto border bg-fafafa fs-1 py-2" %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "Sign up", :class => "btn btn-primary w-75 mb-2 fs-1 mt-0 font-weight-bolder bg-0095F6 p-1 first-button fs-2" %>
+        </div>
+        <% end %>
+
+
+    </div>
+    <div class="registration-content d-flex justify-content-center align-items-center flex-column p-3 mb-0">
+        <div>
+            <p class="fs-2 mb-0 font-weight-100">Have an account? <%= link_to "Log in", new_session_path(resource_name), :class => "fs-2 font-weight-600 sign-a" %></p>
+        </div>
+    </div>
+</div>
