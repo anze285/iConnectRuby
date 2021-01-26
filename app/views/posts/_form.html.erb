@@ -10,12 +10,20 @@
       </ul>
     </div>
   <% end %>
-
+    
+  <%= form.text_field :user_id, :value => current_user.id, :type => "hidden" %>
+  
   <div class="field">
     <%= form.label :description %>
     <%= form.text_area :description %>
   </div>
 
+  <%= form.fields_for :locations do |l| %>
+    <div class="field">
+      <%= l.label :title %>
+      <%= l.text_field :title %>
+    </div>
+  <% end %>
   <div class="actions">
     <%= form.submit %>
   </div>

@@ -53,6 +53,14 @@
         <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Confirm password", :class => "form-control mb-1 w-75 border bg-fafafa fs-1 ml-md-4 mx-auto" %>
       </div>
     </div>
+
+     <div class="field form-group row">
+       <%= f.label :description, :class => "col-sm-2 col-form-label col-form-label-sm pl-md-5" %>
+       <div class="col-sm-10">
+         <%= f.text_field :description, autocomplete: "description", placeholder: "Description", :class => "form-control mb-1 w-75 border bg-fafafa fs-1 ml-md-4 mx-auto" %>
+       </div>
+     </div>
+
     <div class="actions">
       <%= f.submit "Update", :class => "btn btn-primary w-35 mb-2 fs-1 mt-0 font-weight-bolder bg-0095F6 p-1 first-button fs-2" %>
     </div>

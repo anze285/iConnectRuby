@@ -15,6 +15,7 @@ class PostsController < ApplicationController
   # GET /posts/new
   def new
     @post = Post.new
+    @post.locations.build
   end
 
   # GET /posts/1/edit
@@ -69,6 +70,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:description)
+      params.require(:post).permit(:description, :user_id, locations_attributes: [:title])
     end
 end
