@@ -3,21 +3,24 @@ class LikesController < ApplicationController
   before_action :find_like, only: [:destroy]
 
   def create
-    @post.likes.create(user_id: current_user.id)
-    #respond_to do |format|
-    #  format.html { redirect_to @posts }
-    #  format.js
-    #end
+    if already_liked?
+    else
+      @post.likes.create(user_id: current_user.id)
+    end
     redirect_back(fallback_location: @post_path)
   end
 
   def destroy
-    @like.destroy
+    if already_liked?
+      @like.destroy
+    end
     redirect_back(fallback_location: @post_path)
   end
 
   def find_like
-   @like = @post.likes.find(params[:id])
+    if already_liked?
+      @like = @post.likes.find(params[:id])
+    end
   end
 
   private 
