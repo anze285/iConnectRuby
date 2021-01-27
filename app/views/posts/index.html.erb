@@ -8,8 +8,9 @@
                     <span class="float-right mt-2 mr-3"><% post.locations.each do |location| %><%= location.title %><% end %></span>
                 </div>
             <div class="mt-2">
-                <img type="button" data-toggle="modal" data-target="#postmodal<%= post.id %>"
-                    class="img-fluid custom-width" src="https://iconnect.gorsek.si/images/19-4.jpg" alt="post-pic">
+                <%= link_to(post) do %>
+                <img type="button" class="img-fluid custom-width" src="https://iconnect.gorsek.si/images/19-4.jpg" alt="post-pic">
+                <% end %>
             </div>
             <div class="mt-2">
                 <div class="float-left">
@@ -19,15 +20,6 @@
                 <div class="clearfix"></div>
             </div>
             <div class="mt-2 ml-4">
-                    <% pre_like = post.likes.find { |like| like.user_id == current_user.id} %>
-                    <% if pre_like %>
-                    <%= button_to 'Unlike', post_like_path(post.id, pre_like), method: :delete %>
-                    <span class="color-red"><%= fa_icon "heart" %></span>
-                    <% else %>
-                    <span><%= button_to 'Like', post_likes_path(post.id),    method: :post %></span>
-                    <span><%= fa_icon "heart" %></span>
-                    <% end %>
-
                     <p class="fs-1 mb-2">Liked by <span class="font-weight-bolder"><%= post.likes.count %></span></p>
             </div>
             <div class="ml-4">
@@ -35,138 +27,24 @@
                     <%= post.description%></p>
             </div>
             <div class="ml-4">
-                <p type="button" data-toggle="modal" data-target="#postmodal<%= post.id %>"
-                    class="fs-2 mb-1 text-black-50">View comments</p>
+                <%= link_to 'View post', post, :class => "fs-2 mb-1 text-black-50" %>
             </div>
-        </div>
-        <div class="modal fade mx-auto" id="postmodal<%= post.id %>" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered justify-content-center" role="document">
-            <div class="modal-content w-model p-0">
-                <div class="modal-body w-model p-0">
-                    <div class="column w-model ">
-                        <div class="row h-auto">
-                            <div class="d-none d-670-block col-8 pr-0">
-                                <img class="img-fluid img-cover" src="https://iconnect.gorsek.si/images/19-4.jpg">
-                            </div>
-                            <div class="col col-md-4 pl-0">
-                                <div class="">
-                                    <form action="profile_session.php" method="POST">
-                                        <input type="number" name="id" value="<?php echo $post['user_id']; ?>" hidden>
-                                        <div class="mb-1 px-3 mt-3" role="button" onclick="this.parentNode.submit();">
-                                            <img class="custom-img1 mr-3"
-                                                src="https://iconnect.gorsek.si/images/profile.png" alt="profile-pic">
-                                            <span
-                                                class="font-weight-bolder fs-custom mt-1"><%= post.user.username %></span>
-                                        </div>
-                                    </form>
-                                    <hr>
-                                    <div id="wraper" class="pr-1 pl-2">
-                                        <div class="scrollbar" id="style-3">
-                                            <div class="force-overflow"
-                                                id="commentstext<%= post.id %>">
-                                                <div class="mx-2">
-                                                    <img class="mb-1 custom-img1 mr-3"
-                                                        src="<?php echo $comment['profile_pic']; ?>" alt="profile-pic">
-                                                    <span
-                                                        class="font-weight-bolder fs-2 mt-1 fs-custom"><?php echo $comment['username']; ?></span>
-                                                    <p class="ml-3 fs-custom"><?php echo $comment['message']; ?></p>
-                                                </div>
-                                                <?php
-                                            }
-                                            ?>
-
-                                            </div>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                    </div>
-                                    <hr>
-                                    <div>
-                                        <div class="float-left ml-2 ml-sm-0">
-                                            <form action="like.php" method="POST">
-                                                <?php
-                                            $query1 = "SELECT * FROM likes WHERE post_id = ? AND user_id = ?";
-                                            $stmt1 = $pdo->prepare($query1);
-                                            $stmt1->execute([$post['post_id'], $_SESSION['user_id']]);
-                                            if ($stmt1->rowCount() == 0) {
-                                                echo '<span data-content_id="' . $post['post_id'] . '" role="button" class="like fs-custom" id="like' . $post['post_id'] . '"><span class="flaticon-heart"></span></span>';
-                                            } else {
-                                                echo '<span data-content_id="' . $post['post_id'] . '" role="button" class="like fs-custom" id="like' . $post['post_id'] . '"><span class="flaticon-heart1"></span></span>';
-                                            }
-                                            ?>
-                                            </form>
-                                        </div>
-                                        <?php 
-                                    if(isAdmin() || $post['user_id'] == $_SESSION['user_id']){
-
-                                    
-                                    ?>
-                                        <div class="float-right mr-2">
-                                            <form action="delete_post.php" method="POST">
-                                                <input type=" number" name="id" value="<?php echo $post['post_id']; ?>"
-                                                    hidden>
-                                                <span class=" fs-custom mr-2 fs-2 font-weight-600 sign-a save"
-                                                    role="button" onclick="this.parentNode.submit();">Delete</span>
-                                            </form>
-                                        </div>
-                                        <?php }?>
-                                        <div class="float-right mr-2">
-                                            <form action=" save.php" method="POST">
-                                                <?php
-                                            $query1 = "SELECT * FROM saved_posts WHERE post_id = ? AND user_id = ?";
-                                            $stmt1 = $pdo->prepare($query1);
-                                            $stmt1->execute([$post['post_id'], $_SESSION['user_id']]);
-                                            if ($stmt1->rowCount() == 0) {
-                                                echo '<span data-content_id="' . $post['post_id'] . '" class="fs-custom mr-2 fs-2 font-weight-600 sign-a save" role="button" id="save' . $post['post_id'] . '">Save</span>';
-                                            } else {
-                                                echo '<span data-content_id="' . $post['post_id'] . '" class="fs-custom mr-2 fs-2 font-weight-600 sign-a save" role="button" id="save' . $post['post_id'] . '">Saved</span>';
-                                            }
-                                            ?>
-                                            </form>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        <div class="mx-3 mt-3">
-                                            <?php
-                                        $query1 = "SELECT * FROM likes WHERE post_id = ?";
-                                        $stmt1 = $pdo->prepare($query1);
-                                        $stmt1->execute([$post['post_id']]);
-                                        $likes = $stmt1->rowCount();
-                                        ?>
-                                            <p class="fs-custom mb-2 float-left">Liked by <span
-                                                    class="font-weight-bolder"
-                                                    id="likes_p<?php echo $post['post_id']; ?>"><?php echo $likes; ?></span>
-                                            </p>
-                                            <span data-content_id="<?php echo $post['post_id']; ?>"
-                                                class="fs-custom fs-2 font-weight-600 sign-a float-right commenttext"
-                                                role="button">Comment</span>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                        <div class="pl-5 pl-md-1">
-                                            <textarea id="comment<?php echo $post['post_id']; ?>"
-                                                class="fs-custom comment border-top px-2 pt-2"
-                                                placeholder="Add a comment ..."></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         </div>
         <% end %>
     </div>
     <div class="d-none d-lg-block ml-4 mt-5">
-        <div class="ml-1 mb-3 line-height" type="button" onclick="window.location='profile.php';">
+        <div class="ml-1 mb-3 line-height color-black">
+            <%= link_to(profile_path(current_user.id)) do %>
             <div class="float-left mb-0">
-                <img class="custom-img mr-3" src="https://iconnect.gorsek.si/images/profile.png  " alt="profile-pic">
+                <img class="custom-img mr-3" src="https://iconnect.gorsek.si/images/profile.png" alt="profile-pic">
             </div>
             <div class="float-left ml-1">
                 <div class="mt-2 pt-1">
-                    <span class="font-weight-bolder"><%= current_user.username %></span><br>
-                    <span class="text-black-50 fs-2"><%= current_user.fullname %></span>
+                    <span class="font-weight-bolder color-black"><%= current_user.username %></span><br>
+                    <span class="text-black-50 fs-2 color-black"><%= current_user.fullname %></span>
                 </div>
             </div>
+            <% end %> 
             <div class="clearfix">
 
             </div>
@@ -178,18 +56,21 @@
             </div>
             <form action="profile_session.php" method="POST">
                 <input type="number" name="id" value="<?php echo $user['id']; ?>" hidden>
-                <div class=" mt-2 line-height" role="button" onclick="this.parentNode.submit();">
-                    <div class="float-left">
-                        <img class="custom-img1 mr-3" src="<?php echo $user['profile_pic']; ?>" alt="profile-pic">
-                        <img class="custom-img1 mr-3" src="images/profile.png" alt="profile-pic">
+                <div class=" mt-2 line-height">
+                    <% @users.each do |user| %> 
+                    <%= link_to(profile_path(user.id)) do %>
+                    <div class="float-left mb-2">
+                        <img class="custom-img1 mr-3" src="https://iconnect.gorsek.si/images/profile.png" alt="profile-pic">
                     </div>
                     <div class="float-left">
-                        <span class="font-weight-bolder fs-2 mt-1"><?php echo $user['username']; ?></span><br>
-                        <span class="text-black-50 fs-1"><?php echo $user['name']; ?></span>
+                        <span class="font-weight-bolder fs-2 mt-1 color-black"><%= user.username %> </span><br>
+                        <span class="text-black-50 fs-1"><%= user.fullname  %> </span>
                     </div>
                     <div class="clearfix">
 
                     </div>
+                    <% end %>
+                    <% end %>
                 </div>
             </form>
         </div>

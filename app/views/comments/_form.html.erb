@@ -1,22 +1,11 @@
-<%= form_with(model: comment, local: true) do |form| %>
-  <% if comment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(comment.errors.count, "error") %> prohibited this comment from being saved:</h2>
-
-      <ul>
-        <% comment.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= form.label :message %>
-    <%= form.text_field :message %>
+<%= form_with model: [@post, @comment] do |f| %>
+<div class="mx-3 mt-3">
+  <p class="fs-custom mb-2 float-left">Liked by <span class="font-weight-bolder"><%= @post.likes.count %></span></p>
+  <%= f.submit "Comment", :class => "fs-custom fs-2 font-weight-600 sign-a float-right commenttext" %>                                 
   </div>
-
-  <div class="actions">
-    <%= form.submit %>
+  <div class="pl-5 pl-md-1">
+  <%= f.text_area :message, placeholder: "Add a comment ...", :class => "fs-custom comment border-top px-2 pt-2" %>
+  <%= f.text_field :user_id, :value => current_user.id, :type => "hidden" %>
+  <%= f.text_field :post_id, :value => @post.id, :type => "hidden" %>
   </div>
 <% end %>

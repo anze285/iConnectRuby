@@ -4,14 +4,16 @@ class LikesController < ApplicationController
 
   def create
     @post.likes.create(user_id: current_user.id)
-    respond_to do |format|
-      format.html { redirect_to posts }
-      format.js
-    end
+    #respond_to do |format|
+    #  format.html { redirect_to @posts }
+    #  format.js
+    #end
+    redirect_back(fallback_location: @post_path)
   end
 
   def destroy
     @like.destroy
+    redirect_back(fallback_location: @post_path)
   end
 
   def find_like
