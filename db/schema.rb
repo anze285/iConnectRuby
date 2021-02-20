@@ -10,15 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_26_234118) do
+ActiveRecord::Schema.define(version: 2021_01_27_140725) do
 
 # Could not dump table "comments" because of following StandardError
 #   Unknown type 'reference' for column 'user_id'
 
-  create_table "followers", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
+# Could not dump table "followers" because of following StandardError
+#   Unknown type 'reference' for column 'user_id'
 
   create_table "images", force: :cascade do |t|
     t.string "root"

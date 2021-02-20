@@ -7,33 +7,41 @@
             <div class="float-none ml-3 ml-sm-0 float-sm-right float-md-none">
                 <div>
 
-                    <span class="fs-3 font-weight-100 align-middle"><%= current_user.username %></span>
-                    <a href="edit_profile.php"
-                        class="ml-4 btn btn-outline-dark btn-sm align-bottom mb-1 px-3 d-none d-lg-inline-block">Edit
-                        profile</a>
-                    <a type="button"
-                        class="d-none d-lg-inline-block btn btn-outline-dark btn-sm align-bottom mb-1 px-3 ml-2"
-                        data-toggle="modal" data-target="#exampleModalCenter">
-                        New post
-                    </a>
+                    <span class="fs-3 font-weight-100 align-middle"><%= @user.username %></span>
+                    <% if current_user.id == @user.id %> 
+                    <%= link_to "Edit profile", edit_user_registration_path, :class => "ml-4 btn btn-outline-dark btn-sm align-bottom mb-1 px-3 d-none d-lg-inline-block" %>
+                    <%= link_to "New post", new_post_path, :class => "d-none d-lg-inline-block btn btn-outline-dark btn-sm align-bottom mb-1 px-3 ml-2" %>
                     <div class="mt-1">
-                        <a href="edit_profile.php"
-                            class="fs-profile btn btn-outline-dark btn-sm align-bottom mb-1 px-2 px-sm-3 d-inline-block d-lg-none">Edit
-                            profile</a>
-                        <!-- Button trigger modal -->
-                        <a type="button"
-                            class="fs-profile d-inline-block btn btn-outline-dark btn-sm align-bottom mb-1 px-2 px-sm-3 ml-2 d-lg-none"
-                            data-toggle="modal" data-target="#exampleModalCenter">
-                            New post
-                        </a>
+                        <%= link_to "Edit profile", edit_user_registration_path, :class => "fs-profile btn btn-outline-dark btn-sm align-bottom mb-1 px-2 px-sm-3 d-inline-block d-lg-none" %>
+                        <%= link_to "New post", new_post_path, :class => "fs-profile d-inline-block btn btn-outline-dark btn-sm align-bottom mb-1 px-2 px-sm-3 ml-2 d-lg-none" %>
                     </div>
+                    <% else %>
+                        <% pre_followed = @user.followers.find { |follower| follower.follower_id == current_user.id} %>
+                        <% if pre_followed %>
+                            <%= link_to(profile_follower_path(@user.id, pre_followed), method: :delete) do %>
+                                <span href="unfollowed.php"
+                                    class="ml-4 btn btn-outline-dark btn-sm align-bottom mb-1 px-3 d-none d-lg-inline-block">Unfollow</span>
+                                <div class="mt-1">
+                                    <span href="unfollowed.php"
+                                        class="fs-profile btn btn-outline-dark btn-sm align-bottom mb-1 px-2 px-sm-3 d-inline-block d-lg-none">Unfollow</span>
+                                </div>
+                            <% end %>
+                        <% else %>
+                            <%= link_to(profile_followers_path(@user.id), method: :post) do %>
+                                <span class="ml-4 btn btn-outline-dark btn-sm align-bottom mb-1 px-3 d-none d-lg-inline-block">Follow</span>
+                                <div class="mt-1">
+                                    <span class="fs-profile btn btn-outline-dark btn-sm align-bottom mb-1 px-2 px-sm-3 d-inline-block d-lg-none">Follow</span>
+                                </div>
+                            <% end %>
+                        <% end %>
+                    <% end %> 
                 </div>
                 <div class="my-2">
                     
                     <span class="fs-profile"><span class="font-weight-bolder"><%= @user.posts.count %></span><span
                             class="mr-1 mr-sm-3"> posts</span></span>
                     <span type="button" data-toggle="modal" data-target="#modalfollowers" class="fs-profile"><span
-                            class="font-weight-bolder"><?php echo $followers["count"]; ?></span><span
+                            class="font-weight-bolder"><%= @user.followers.count %></span><span
                             class="mr-1 mr-sm-3"> followers</span></span>
                     <div class="modal fade" id="modalfollowers" data-backdrop="static" data-keyboard="false"
                         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -46,40 +54,22 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <?php
-                                    $query = "SELECT u.id AS id, u.username AS username, u.profile_pic AS profile_pic FROM users u INNER JOIN followers f ON u.id=f.follower_id WHERE f.user_id = ?";
-                                    $stmt = $pdo->prepare($query);
-                                    $stmt->execute([$_SESSION['user_id']]);
-                                    if ($stmt->rowCount() == 0) {
-                                        echo "No one follows you yet.";
-                                    }
-                                    for ($i = 0; $followers = $stmt->fetch(); $i++) {
-                                        if (empty($followers['profile_pic'])) {
-                                            $followers['profile_pic'] = 'images/profile.png';
-                                        }
-                                        if ($i != 0) {
-                                            echo '<div class="dropdown-divider my-0"></div>';
-                                        }
-                                        echo '<form action="profile_session.php" method="POST">';
-                                        echo '<div role="button" onclick="this.parentNode.submit();" class="d-flex justify-content-start px-1 py-1 max-content"><div>';
-                                        echo '<img class="custom-img1 mr-3" src="' . $followers['profile_pic'] . '" alt="profile-pic">';
-                                        echo '</div><div class="my-auto pb-1"><span><span class="px-0 font-weight-bold py-0" href="">' . $followers['username'] . '</span></span></div></div>';
-                                        echo '<input type="number" name="id" value="' . $followers['id'] . '" hidden>';
-                                        echo '</form>';
-                                    }
-                                    ?>
+                                    <% @user.followers.each do |follower| %>
+                                    <%= link_to(profile_path(follower.follower_id)) do %>
+                                    <div role="button" class="d-flex justify-content-start px-1 py-1 max-content"><div>
+                                    <img class="custom-img1 mr-3" src="https://iconnect.gorsek.si/images/profile.png" alt="profile-pic">
+                                    </div><div class="my-auto pb-1"><span><span class="px-0 font-weight-bold py-0 color-black"><%= @users.where(id: follower.follower_id).last.username %></span></span></div></div>
+                                    <% end %>
+                                    <% if follower.id != @user.followers.last.id%>
+                                        <div class="dropdown-divider my-0"></div>
+                                    <% end %>
+                                    <% end %>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <?php
-                    $query = "SELECT COUNT(*) AS count FROM followers WHERE follower_id = ?";
-                    $stmt = $pdo->prepare($query);
-                    $stmt->execute([$_SESSION['user_id']]);
-                    $following = $stmt->fetch();
-                    ?>
                     <span type="button" data-toggle="modal" data-target="#modalfollowing" class="fs-profile"><span
-                            class="font-weight-bolder"><?php echo $following["count"]; ?></span><span>
+                            class="font-weight-bolder"><%= @following.count %></span><span>
                             following</span></span>
                     <div class="modal fade" id="modalfollowing" data-backdrop="static" data-keyboard="false"
                         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
@@ -92,64 +82,47 @@
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    <?php
-                                    $query = "SELECT u.id AS id, u.username AS username, u.profile_pic AS profile_pic FROM users u INNER JOIN followers f ON u.id=f.user_id WHERE f.follower_id = ?";
-                                    $stmt = $pdo->prepare($query);
-                                    $stmt->execute([$_SESSION['user_id']]);
-                                    if ($stmt->rowCount() == 0) {
-                                        echo "You don't follow anyone yet.";
-                                    }
-                                    for ($i = 0; $following = $stmt->fetch(); $i++) {
-                                        if (empty($following['profile_pic'])) {
-                                            $following['profile_pic'] = 'images/profile.png';
-                                        }
-                                        if ($i != 0) {
-                                            echo '<div class="dropdown-divider my-0"></div>';
-                                        }
-                                        echo '<form action="profile_session.php" method="POST">';
-                                        echo '<div role="button" onclick="this.parentNode.submit();" class="d-flex justify-content-start px-1 py-1 max-content"><div>';
-                                        echo '<img class="custom-img1 mr-3" src="' . $following['profile_pic'] . '" alt="profile-pic">';
-                                        echo '</div><div class="my-auto pb-1"><span><span class="px-0 font-weight-bold py-0" href="">' . $following['username'] . '</span></span></div></div>';
-                                        echo '<input type="number" name="id" value="' . $following['id'] . '" hidden>';
-                                        echo '</form>';
-                                    }
-                                    ?>
+                                    <% @following.each do |following| %>
+                                    <%= link_to(profile_path(following.user.id)) do %>
+                                    <div role="button" class="d-flex justify-content-start px-1 py-1 max-content">
+                                        <div>
+                                            <img class="custom-img1 mr-3"
+                                                src="https://iconnect.gorsek.si/images/profile.png" alt="profile-pic">
+                                        </div>
+                                        <div class="my-auto pb-1"><span><span class="px-0 font-weight-bold py-0 color-black"
+                                                    href=""><%= following.user.username %></span></span></div>
+                                    </div>
+                                    <% end %>
+                                    <% if following.id != @following.last.id%>
+                                    <div class="dropdown-divider my-0"></div>
+                                    <% end %>
+                                    <% end %>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <span class="fs-profile font-weight-600"><?php echo $user['name']; ?></span>
+                    <span class="fs-profile font-weight-600"><%= @user.username %></span>
                 </div>
             </div>
         </div>
     </div>
     <div class="mt-1">
-        <p class="fs-profile-sm"><?php echo $user['bio']; ?></p>
+        <p class="fs-profile-sm"><%= @user.description %></p>
     </div>
     <hr>
     <div>
         <div class="container">
             <h2 class="text-center mt-0 mb-3 instantgram font-weight-normal">My posts</h2>
             <div class='row row-cols-1 row-cols-md-2 row-cols-lg-3'>
-                <?php
-                $query = "SELECT DISTINCT p.id AS post_id, i.root AS root FROM users u INNER JOIN posts p ON u.id=p.user_id INNER JOIN images i ON p.id=i.post_id WHERE u.id = ? ORDER BY p.date DESC";
-                $stmt = $pdo->prepare($query);
-                $stmt->execute([$_SESSION['user_id']]);
-                $count = $stmt->rowCount();
-                for (; $post = $stmt->fetch(); $j++) {
-                    $shownposts[$j] = $post['post_id'];
-                ?>
+                <% @user.posts.each do |post| %> 
+                <%= link_to(post) do %>
                 <div class="col mb-4">
-                    <img class="img-fluid img-strech" src="<?php echo $post['root']; ?>" alt="post-pic" type="button"
-                        data-toggle="modal" data-target="#postmodal<?php echo $j; ?>">
+                    <img class="img-fluid img-strech" src="https://iconnect.gorsek.si/images/19-4.jpg" alt="post-pic">
                 </div>
-
-                <?php
-
-                }
-                ?>
+                <% end %>
+                <% end %>
             </div>
 
         </div>

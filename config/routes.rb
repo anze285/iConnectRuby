@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
-  resources :profiles
+  resources :profiles do
+    resources :followers
+  end
   devise_for :users
   resources :locations
   resources :saved_posts
   resources :images
-  resources :followers
   resources :posts do
     resources :comments
     resources :likes

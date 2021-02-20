@@ -12,8 +12,10 @@
                 <form action="profile_session.php" method="POST">
                   <input type="number" name="id" value="<?php echo $post['user_id']; ?>" hidden>
                   <div class="mb-1 px-3 mt-3">
+                    <%= link_to(profile_path(@post.user.id)) do %>
                     <img class="custom-img1 mr-3" src="https://iconnect.gorsek.si/images/profile.png" alt="profile-pic">
-                    <span class="font-weight-bolder fs-custom mt-1"><%= @post.user.username %></span>
+                    <span class="font-weight-bolder fs-custom mt-1 color-black"><%= @post.user.username %></span>
+                    <% end %>
                   </div>
                 </form>
                 <hr>
@@ -22,9 +24,10 @@
                     <div class="force-overflow" id="commentstext<%= @post.id %>">
                       <% @comments.each do |comment| %>
                         <div class="mx-2">
-                          <img class="mb-1 custom-img1 mr-3" src="https://iconnect.gorsek.si/images/profile.png"
-                            alt="profile-pic">
-                          <span class="font-weight-bolder fs-2 mt-1 fs-custom"><%= comment.user.username %></span>
+                          <%= link_to(profile_path(comment.user.id)) do %>
+                          <img class="mb-1 custom-img1 mr-3" src="https://iconnect.gorsek.si/images/profile.png" alt="profile-pic">
+                          <span class="font-weight-bolder fs-2 mt-1 fs-custom color-black"><%= comment.user.username %></span>
+                          <% end %>
                           <p class="ml-3 fs-custom"><%= comment.message %></p>
                         </div>
                       <% end %>  
