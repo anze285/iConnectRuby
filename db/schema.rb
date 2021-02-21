@@ -12,11 +12,23 @@
 
 ActiveRecord::Schema.define(version: 2021_01_27_140725) do
 
-# Could not dump table "comments" because of following StandardError
-#   Unknown type 'reference' for column 'user_id'
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
-# Could not dump table "followers" because of following StandardError
-#   Unknown type 'reference' for column 'user_id'
+  create_table "comments", force: :cascade do |t|
+    t.string "message"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+    t.integer "post_id"
+  end
+
+  create_table "followers", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+    t.integer "follower_id"
+  end
 
   create_table "images", force: :cascade do |t|
     t.string "root"
@@ -24,14 +36,26 @@ ActiveRecord::Schema.define(version: 2021_01_27_140725) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-# Could not dump table "likes" because of following StandardError
-#   Unknown type 'reference' for column 'user_id'
+  create_table "likes", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+    t.integer "post_id"
+  end
 
-# Could not dump table "locations" because of following StandardError
-#   Unknown type 'reference' for column 'post_id'
+  create_table "locations", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "post_id"
+  end
 
-# Could not dump table "posts" because of following StandardError
-#   Unknown type 'reference' for column 'user_id'
+  create_table "posts", force: :cascade do |t|
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+  end
 
   create_table "saved_posts", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
