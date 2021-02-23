@@ -4,7 +4,12 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    @followers = User.joins(:followers).where(followers: { follower_id: current_user.id})
+    if @followers.exists?
+      @posts = Post.where(user_id: [@followers.ids])
+    else
+      @posts = Post.order("RANDOM()").limit(1)
+    end
     @users = User.order("RANDOM()").limit(5).where.not(id: current_user.id)
   end
 
