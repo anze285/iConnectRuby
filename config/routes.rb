@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :profiles do
     resources :followers
   end
+  resources :discoveries
   devise_for :users
   resources :locations
   resources :saved_posts

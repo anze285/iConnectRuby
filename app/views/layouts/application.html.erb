@@ -33,7 +33,9 @@
                                           <% end %>
                                     </li>
                                     <li class="nav-item">
-                                          <a class="nav-link" href="discoveries.php"><%= fa_icon "compass 2x" %></a>
+                                          <%= link_to(discoveries_path, :class => "nav-link") do %>
+                                          <%= fa_icon "compass 2x" %>
+                                          <% end %> 
                                     </li>
                                     <li class="nav-item">
                                           <div class="dropdown">
