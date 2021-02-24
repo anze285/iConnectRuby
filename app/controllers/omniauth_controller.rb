@@ -24,7 +24,7 @@ class OmniauthController < ApplicationController
 
     def failure
         flash[:error] = 'There was a problem logging you in. Please register or try signing in later.'
-        Sredirect_to new_user_registration_path
+        redirect_to new_user_registration_path
     end
 
     #def set_flash_message!(key, kind, options = {})
