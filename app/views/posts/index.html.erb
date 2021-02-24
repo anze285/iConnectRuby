@@ -5,7 +5,7 @@
             <div class="m-2 align-middle">
                 <%= link_to(profile_path(post.user.id)) do %>
                     <img class="custom-img1 mr-3" src="
-                    <% if post.user.picture.exists? %>
+                    <% if post.user.picture %>
                         <%= post.user.picture %>
                     <% else %>
                         <%= "https://iconnect.gorsek.si/images/profile.png" %>
@@ -43,7 +43,7 @@
             <%= link_to(profile_path(current_user.id)) do %>
             <div class="float-left mb-0">
                 <img class="custom-img mr-3" src="
-                <% if current_user.picture.exists? %>
+                <% if current_user.picture %>
                     <%= current_user.picture %>
                 <% else %>
                     <%= "https://iconnect.gorsek.si/images/profile.png" %>
@@ -71,7 +71,7 @@
                     <%= link_to(profile_path(user.id)) do %>
                     <div class="float-left mb-2">
                         <img class="custom-img1 mr-3" src="
-                        <% if user.picture.exists? %>
+                        <% if user.picture %>
                             <%= user.picture %>
                         <% else %>
                             <%= "https://iconnect.gorsek.si/images/profile.png" %>

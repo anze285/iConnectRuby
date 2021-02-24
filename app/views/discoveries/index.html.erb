@@ -7,7 +7,7 @@
                     <div class="m-2 align-middle">
                         
                         <img class="custom-img1 mr-3" src="
-                        <% if post.user.picture.exists? %>
+                        <% if post.user.picture %>
                             <%= post.user.picture %>
                         <% else %>
                             <%= "https://iconnect.gorsek.si/images/profile.png" %>
