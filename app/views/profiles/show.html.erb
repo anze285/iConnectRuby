@@ -19,11 +19,9 @@
                         <% pre_followed = @user.followers.find { |follower| follower.follower_id == current_user.id} %>
                         <% if pre_followed %>
                             <%= link_to(profile_follower_path(@user.id, pre_followed), method: :delete) do %>
-                                <span href="unfollowed.php"
-                                    class="ml-4 btn btn-outline-dark btn-sm align-bottom mb-1 px-3 d-none d-lg-inline-block">Unfollow</span>
+                                <span class="ml-4 btn btn-outline-dark btn-sm align-bottom mb-1 px-3 d-none d-lg-inline-block">Unfollow</span>
                                 <div class="mt-1">
-                                    <span href="unfollowed.php"
-                                        class="fs-profile btn btn-outline-dark btn-sm align-bottom mb-1 px-2 px-sm-3 d-inline-block d-lg-none">Unfollow</span>
+                                    <span class="fs-profile btn btn-outline-dark btn-sm align-bottom mb-1 px-2 px-sm-3 d-inline-block d-lg-none">Unfollow</span>
                                 </div>
                             <% end %>
                         <% else %>

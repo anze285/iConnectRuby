@@ -9,15 +9,12 @@
             </div>
             <div class="col col-md-4 pl-0">
               <div class="">
-                <form action="profile_session.php" method="POST">
-                  <input type="number" name="id" value="<?php echo $post['user_id']; ?>" hidden>
                   <div class="mb-1 px-3 mt-3">
                     <%= link_to(profile_path(@post.user.id)) do %>
                     <img class="custom-img1 mr-3" src="https://iconnect.gorsek.si/images/profile.png" alt="profile-pic">
                     <span class="font-weight-bolder fs-custom mt-1 color-black"><%= @post.user.username %></span>
                     <% end %>
                   </div>
-                </form>
                 <hr>
                 <div id="wraper" class="pr-1 pl-2">
                   <div class="scrollbar" id="style-3">
