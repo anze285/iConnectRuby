@@ -7,6 +7,10 @@ class PostsController < ApplicationController
     @followers = User.joins(:followers).where(followers: { follower_id: current_user.id})
     if @followers.exists?
       @posts = Post.where(user_id: [@followers.ids])
+      if @posts.exists?
+      else
+        @posts = Post.order("RANDOM()").limit(1)
+      end  
     else
       @posts = Post.order("RANDOM()").limit(1)
     end
