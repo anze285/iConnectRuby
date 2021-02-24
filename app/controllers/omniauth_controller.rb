@@ -3,7 +3,7 @@ class OmniauthController < ApplicationController
     def facebook
         @user = User.create_from_provider_data(request.env['omniauth.auth'])
         @user1 = User.where(email: @user.email)
-        if @user1.exists?
+        if @user1.persisted?
             if @user.persisted?
                 sign_in_and_redirect @user
                 #set_flash_message(:notice, :success, kind: 'Facebook') if is_navigational_format?
@@ -19,7 +19,7 @@ class OmniauthController < ApplicationController
     def google_oauth2
         @user = User.create_from_provider_data(request.env['omniauth.auth'])
         @user1 = User.where(email: @user.email)
-        if @user1.exists?
+        if @user1.persisted?
             if @user.persisted?
                 sign_in_and_redirect @user
                 #set_flash_message(:notice, :success, kind: 'Google') if is_navigational_format?
