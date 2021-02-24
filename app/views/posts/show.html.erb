@@ -11,7 +11,13 @@
               <div class="">
                   <div class="mb-1 px-3 mt-3">
                     <%= link_to(profile_path(@post.user.id)) do %>
-                    <img class="custom-img1 mr-3" src="https://iconnect.gorsek.si/images/profile.png" alt="profile-pic">
+                    <img class="custom-img1 mr-3" src="
+                    <% if @post.user.picture.exists? %>
+                      <%= @post.user.picture %>
+                    <% else %>
+                      <%= "https://iconnect.gorsek.si/images/profile.png" %>
+                    <% end %>
+                    " alt="profile-pic">
                     <span class="font-weight-bolder fs-custom mt-1 color-black"><%= @post.user.username %></span>
                     <% end %>
                   </div>
@@ -22,7 +28,13 @@
                       <% @comments.each do |comment| %>
                         <div class="mx-2">
                           <%= link_to(profile_path(comment.user.id)) do %>
-                          <img class="mb-1 custom-img1 mr-3" src="https://iconnect.gorsek.si/images/profile.png" alt="profile-pic">
+                          <img class="mb-1 custom-img1 mr-3" src="
+                          <% if comment.user.picture.exists? %>
+                            <%= comment.user.picture %>
+                          <% else %>
+                            <%= "https://iconnect.gorsek.si/images/profile.png" %>
+                          <% end %>
+                          " alt="profile-pic">
                           <span class="font-weight-bolder fs-2 mt-1 fs-custom color-black"><%= comment.user.username %></span>
                           <% end %>
                           <p class="ml-3 fs-custom"><%= comment.message %></p>

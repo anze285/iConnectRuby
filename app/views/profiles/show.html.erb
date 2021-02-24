@@ -1,7 +1,13 @@
 <div class="container-fluid mt-5 pt-md-4 w-custom">
     <div class="row justify-content-md-center px-2 px-sm-5 pt-2">
         <div class="col-auto justify-content-center px-0 px-md-5">
-            <img class="custom-img2 mr-0 mr-md-3" src="https:iconnect.gorsek.si/images/profile.png" alt="profile-pic">
+            <img class="custom-img2 mr-0 mr-md-3" src="
+            <% if @user.picture.exists? %>
+                <%= @user.picture %>
+            <% else %>
+                <%= "https://iconnect.gorsek.si/images/profile.png" %>
+            <% end %>
+            " alt="profile-pic">
         </div>
         <div class="col ml-0 ml-md-4 my-auto">
             <div class="float-none ml-3 ml-sm-0 float-sm-right float-md-none">
@@ -55,7 +61,13 @@
                                     <% @user.followers.each do |follower| %>
                                     <%= link_to(profile_path(follower.follower_id)) do %>
                                     <div role="button" class="d-flex justify-content-start px-1 py-1 max-content"><div>
-                                    <img class="custom-img1 mr-3" src="https://iconnect.gorsek.si/images/profile.png" alt="profile-pic">
+                                    <img class="custom-img1 mr-3" src="
+                                    <% if follower.user.picture.exists? %>
+                                        <%= follower.user.picture %>
+                                    <% else %>
+                                        <%= "https://iconnect.gorsek.si/images/profile.png" %>
+                                    <% end %>
+                                    " alt="profile-pic">
                                     </div><div class="my-auto pb-1"><span><span class="px-0 font-weight-bold py-0 color-black"><%= @users.where(id: follower.follower_id).last.username %></span></span></div></div>
                                     <% end %>
                                     <% if follower.id != @user.followers.last.id%>
@@ -85,7 +97,13 @@
                                     <div role="button" class="d-flex justify-content-start px-1 py-1 max-content">
                                         <div>
                                             <img class="custom-img1 mr-3"
-                                                src="https://iconnect.gorsek.si/images/profile.png" alt="profile-pic">
+                                                src="
+                                                <% if following.user.picture.exists? %>
+                                                    <%= following.user.picture %>
+                                                <% else %>
+                                                    <%= "https://iconnect.gorsek.si/images/profile.png" %>
+                                                <% end %>
+                                                " alt="profile-pic">
                                         </div>
                                         <div class="my-auto pb-1"><span><span class="px-0 font-weight-bold py-0 color-black"
                                                     href=""><%= following.user.username %></span></span></div>

@@ -51,7 +51,13 @@
                                                                   <div class="d-flex justify-content-start px-1 py-1 max-content">
                                                                         <div>
                                                                               <img class="custom-img1 mr-3"
-                                                                                    src="https://iconnect.gorsek.si/images/profile.png"
+                                                                                    src="
+                                                                                    <% if follower.user.picture.exists? %>
+                                                                                          <%= follower.user.picture %>
+                                                                                    <% else %>
+                                                                                          <%= "https://iconnect.gorsek.si/images/profile.png" %>
+                                                                                    <% end %>
+                                                                                    "
                                                                                     alt="profile-pic">
                                                                               </div>
                                                                         <div class="my-auto pb-1"><span><span

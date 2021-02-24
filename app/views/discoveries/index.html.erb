@@ -6,7 +6,13 @@
             <div class="bg-white border">
                     <div class="m-2 align-middle">
                         
-                        <img class="custom-img1 mr-3" src="https://iconnect.gorsek.si/images/profile.png"
+                        <img class="custom-img1 mr-3" src="
+                        <% if post.user.picture.exists? %>
+                            <%= post.user.picture %>
+                        <% else %>
+                            <%= "https://iconnect.gorsek.si/images/profile.png" %>
+                        <% end %>
+                        "
                             alt="profile-pic">
                         <%= link_to(profile_path(post.user.id)) do %>
                         <span class="font-weight-bolder fs-2 mt-1 color-black"><%= post.user.username %> </span>
