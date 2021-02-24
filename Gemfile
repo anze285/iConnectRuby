@@ -35,6 +35,11 @@ gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
 gem 'activerecord-session_store'
 
+#fileupload
+gem 'carrierwave', "0.10.0"
+gem 'fog', '~> 1.37.0'
+gem "fog-aws"
+
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 

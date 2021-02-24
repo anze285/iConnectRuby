@@ -24,6 +24,10 @@
       <%= l.text_field :title %>
     </div>
   <% end %>
+
+  <%= form.file_field :image %>
+  <%= form.hidden_field :image_cache %>
+
   <div class="actions">
     <%= form.submit %>
   </div>
