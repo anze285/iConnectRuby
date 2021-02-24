@@ -119,7 +119,7 @@
                 <% @user.posts.each do |post| %> 
                 <%= link_to(post) do %>
                 <div class="col mb-4">
-                    <img class="img-fluid img-strech" src="https://iconnect.gorsek.si/images/19-4.jpg" alt="post-pic">
+                    <img class="img-fluid img-strech" src="<%= post.image %>" alt="post-pic">
                 </div>
                 <% end %>
                 <% end %>
