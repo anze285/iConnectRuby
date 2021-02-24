@@ -1,3 +1,15 @@
+GIT
+  remote: https://github.com/heartcombo/devise.git
+  revision: e16d60d0fedc5f5e6f541b2b9e901a2d53f8ceda
+  branch: ca-omniauth-2
+  specs:
+    devise (4.7.3)
+      bcrypt (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 4.1.0)
+      responders
+      warden (~> 1.2.3)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -45,6 +57,12 @@ GEM
     activerecord (6.0.3.5)
       activemodel (= 6.0.3.5)
       activesupport (= 6.0.3.5)
+    activerecord-session_store (1.1.3)
+      actionpack (>= 4.0)
+      activerecord (>= 4.0)
+      multi_json (~> 1.11, >= 1.11.2)
+      rack (>= 1.5.2, < 3)
+      railties (>= 4.0)
     activestorage (6.0.3.5)
       actionpack (= 6.0.3.5)
       activejob (= 6.0.3.5)
@@ -75,22 +93,23 @@ GEM
     childprocess (3.0.0)
     concurrent-ruby (1.1.8)
     crass (1.0.6)
-    devise (4.7.3)
-      bcrypt (~> 3.0)
-      orm_adapter (~> 0.1)
-      railties (>= 4.1.0)
-      responders
-      warden (~> 1.2.3)
     erubi (1.10.0)
+    faraday (1.3.0)
+      faraday-net_http (~> 1.0)
+      multipart-post (>= 1.2, < 3)
+      ruby2_keywords
+    faraday-net_http (1.0.1)
     ffi (1.14.2-x64-mingw32)
     font-awesome-rails (4.7.0.7)
       railties (>= 3.2, < 7)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
+    hashie (4.1.0)
     i18n (1.8.9)
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.2)
       activesupport (>= 5.0.0)
+    jwt (2.2.2)
     loofah (2.9.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -103,9 +122,31 @@ GEM
     mini_mime (1.0.2)
     minitest (5.14.3)
     msgpack (1.4.2)
+    multi_json (1.15.0)
+    multi_xml (0.6.0)
+    multipart-post (2.1.1)
     nio4r (2.5.5)
     nokogiri (1.11.1-x64-mingw32)
       racc (~> 1.4)
+    oauth2 (1.4.4)
+      faraday (>= 0.8, < 2.0)
+      jwt (>= 1.0, < 3.0)
+      multi_json (~> 1.3)
+      multi_xml (~> 0.5)
+      rack (>= 1.2, < 3)
+    omniauth (1.9.1)
+      hashie (>= 3.4.6)
+      rack (>= 1.6.2, < 3)
+    omniauth-facebook (8.0.0)
+      omniauth-oauth2 (~> 1.2)
+    omniauth-google-oauth2 (0.8.1)
+      jwt (>= 2.0)
+      oauth2 (~> 1.1)
+      omniauth (>= 1.1.1)
+      omniauth-oauth2 (>= 1.6)
+    omniauth-oauth2 (1.7.1)
+      oauth2 (~> 1.4)
+      omniauth (>= 1.9, < 3)
     orm_adapter (0.5.0)
     pg (1.2.3-x64-mingw32)
     public_suffix (4.0.6)
@@ -148,6 +189,7 @@ GEM
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
+    ruby2_keywords (0.0.4)
     rubyzip (2.3.0)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
@@ -205,12 +247,16 @@ PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
+  activerecord-session_store
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
-  devise
+  devise!
   font-awesome-rails
   jbuilder (~> 2.7)
+  omniauth (~> 1.9.1)
+  omniauth-facebook
+  omniauth-google-oauth2
   pg
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.4)

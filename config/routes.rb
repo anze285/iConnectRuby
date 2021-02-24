@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     resources :followers
   end
   resources :discoveries
-  devise_for :users
+  devise_for :users, controllers: {omniauth_callbacks: 'omniauth'}
   resources :locations
   resources :saved_posts
   resources :images

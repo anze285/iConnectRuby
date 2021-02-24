@@ -28,7 +28,12 @@ gem "font-awesome-rails"
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
-gem 'devise' #user authentication
+gem 'devise', github: 'heartcombo/devise', branch: 'ca-omniauth-2' #user authentication
+
+gem 'omniauth', '~> 1.9.1'
+gem 'omniauth-facebook'
+gem 'omniauth-google-oauth2'
+gem 'activerecord-session_store'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
