@@ -7,7 +7,7 @@ class OmniauthController < ApplicationController
             #set_flash_message(:notice, :success, kind: 'Facebook') if is_navigational_format?
         else
             flash[:error] = 'There was a problem signing in through Facebook. Please register or try signing in later.'
-            redirect_to new_user_registration_path, alert: "There was a problem signing in through Facebook. Please register or try signing in later." #url
+            redirect_to new_user_registration_path, alert: "There was a problem signing in through Facebook. Please register or try signing in later. User might already exist." #url
         end       
     end
 
@@ -18,7 +18,7 @@ class OmniauthController < ApplicationController
             #set_flash_message(:notice, :success, kind: 'Google') if is_navigational_format?
         else
             flash[:error] = 'There was a problem signing in through Google. Please register or try signing in later.'
-            redirect_to new_user_registration_path, alert: "There was a problem signing in through Google. Please register or try signing in later." #url
+            redirect_to new_user_registration_path, alert: "There was a problem signing in through Google. Please register or try signing in later. User might already exist." #url
         end
     end
 
