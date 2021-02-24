@@ -3,8 +3,8 @@ class ApplicationController < ActionController::Base
     before_action :set_page
 
     def configure_permitted_parameters
-        devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :phone, :fullname, :description])
-        devise_parameter_sanitizer.permit(:account_update, keys: [:username, :phone, :fullname, :description])
+        devise_parameter_sanitizer.permit(:sign_up, keys: [:username, :phone, :fullname, :description, :picture, :picture_cache])
+        devise_parameter_sanitizer.permit(:account_update, keys: [:username, :phone, :fullname, :description, :picture, :picture_cache])
     end
 
     def set_page
