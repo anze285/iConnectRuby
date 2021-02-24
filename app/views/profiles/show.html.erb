@@ -2,7 +2,7 @@
     <div class="row justify-content-md-center px-2 px-sm-5 pt-2">
         <div class="col-auto justify-content-center px-0 px-md-5">
             <img class="custom-img2 mr-0 mr-md-3" src="
-            <% if @user.picture %>
+            <% if @user.picture.present? %>
                 <%= @user.picture %>
             <% else %>
                 <%= "https://iconnect.gorsek.si/images/profile.png" %>
@@ -62,7 +62,7 @@
                                     <%= link_to(profile_path(follower.follower_id)) do %>
                                     <div role="button" class="d-flex justify-content-start px-1 py-1 max-content"><div>
                                     <img class="custom-img1 mr-3" src="
-                                    <% if follower.user.picture %>
+                                    <% if follower.user.picture.present? %>
                                         <%= follower.user.picture %>
                                     <% else %>
                                         <%= "https://iconnect.gorsek.si/images/profile.png" %>
@@ -98,7 +98,7 @@
                                         <div>
                                             <img class="custom-img1 mr-3"
                                                 src="
-                                                <% if following.user.picture %>
+                                                <% if following.user.picture.present? %>
                                                     <%= following.user.picture %>
                                                 <% else %>
                                                     <%= "https://iconnect.gorsek.si/images/profile.png" %>
