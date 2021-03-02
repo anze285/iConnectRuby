@@ -20,8 +20,12 @@
                         </div>
                         <div class="d-none d-md-block mx-auto">
                               <div class="form-inline my-2">
-                                    <input class="form-control dropdown-toggle" type="text" placeholder="Search" name="names" id="search" aria-haspopup="true" aria-expanded="false">
-                                    <span class="ml-1"><%= fa_icon "search 2x" %></span>
+                                    <%= form_tag profiles_path, :method => 'get' do %>
+                                    <%= text_field_tag :search, params[:search], :class => "form-control dropdown-toggle", :placeholder => "Search" %>
+                                    <%= button_tag(type: "submit", :name => nil, :class => "search-button" ) do %>
+                                          <span class="ml-1 color-black"><%= fa_icon "search 2x" %></span>
+                                    <% end %>
+                                    <% end %>
                                     <div id="show_up" class="dropdown-menu left-auto dropdown-menu-right"></div>
                               </div>
 

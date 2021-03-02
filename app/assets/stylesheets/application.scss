@@ -5,6 +5,18 @@ body {
     background-color: #fafafa;
 }
 
+.search-button {
+    background-color: white;
+    border: none;
+    padding: 0;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.border-bottom{
+    border-bottom: 1px;
+}
+
 .color-red {
     color: red;
 }

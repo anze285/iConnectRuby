@@ -1,0 +1,28 @@
+<% if !@users.exists? %>
+<h2 class="mt-5 pt-5 text-center instantgram font-weight-normal">User not found!</h2>
+<% end %>
+<% @users.each do |user| %>
+<div class="ml-4 mt-5">
+    <div class="ml-1 mb-3 line-height color-black">
+        <%= link_to(profile_path(user.id)) do %>
+        <div class="float-left mb-0">
+            <img class="custom-img mr-3" src="
+                <% if user.picture.present? %>
+                    <%= user.picture %>
+                <% else %>
+                    <%= "https://iconnect.gorsek.si/images/profile.png" %>
+                <% end %>
+                " alt="profile-pic">
+        </div>
+        <div class="float-left ml-1">
+            <div class="mt-2 pt-1">
+                <span class="font-weight-bolder color-black"><%= user.username %></span><br>
+                <span class="text-black-50 fs-2 color-black"><%= user.fullname %></span>
+                
+            </div>
+        </div>
+        <% end %>
+    </div>
+</div>
+<br>
+<% end %> 
