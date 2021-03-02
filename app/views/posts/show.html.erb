@@ -47,31 +47,9 @@
                 <hr>
                 <div>
                   <div class="float-left ml-2 ml-sm-0">
-                    <%#<form action="like.php" method="POST">
-                                                <?php
-                                            $query1 = "SELECT * FROM likes WHERE post_id = ? AND user_id = ?";
-                                            $stmt1 = $pdo->prepare($query1);
-                                            $stmt1->execute([$post['post_id'], $_SESSION['user_id']]);
-                                            if ($stmt1->rowCount() == 0) {
-                                                echo '<span data-content_id="' . $post['post_id'] . '" role="button" class="like fs-custom" id="like' . $post['post_id'] . '"><span class="flaticon-heart"></span></span>';
-                                            } else {
-                                                echo '<span data-content_id="' . $post['post_id'] . '" role="button" class="like fs-custom" id="like' . $post['post_id'] . '"><span class="flaticon-heart1"></span></span>';
-                                            }
-                                            
-                                            </form>%>
                   </div>
                   <div class="float-right mr-2">
-                    <%#<form action=" save.php" method="POST">
-                                                <?php
-                                            $query1 = "SELECT * FROM saved_posts WHERE post_id = ? AND user_id = ?";
-                                            $stmt1 = $pdo->prepare($query1);
-                                            $stmt1->execute([$post['post_id'], $_SESSION['user_id']]);
-                                            if ($stmt1->rowCount() == 0) {
-                                                echo '<span data-content_id="' . $post['post_id'] . '" class="fs-custom mr-2 fs-2 font-weight-600 sign-a save" role="button" id="save' . $post['post_id'] . '">Save</span>';
-                                            } else {
-                                                echo '<span data-content_id="' . $post['post_id'] . '" class="fs-custom mr-2 fs-2 font-weight-600 sign-a save" role="button" id="save' . $post['post_id'] . '">Saved</span>';
-                                            }
-                                            </form>%>
+                    
                   </div>
                   <div class="clearfix"></div>
                   <% pre_like = @post.likes.find { |like| like.user_id == current_user.id} %>
@@ -84,6 +62,9 @@
                     <span class="color-black ml-1"><%= fa_icon "heart" %></span>
                   <% end %> 
                   <% end %>
+                  <!--<div class="float-right mr-2 mt-0 pt-0">
+                    <%#= link_to 'Edit', edit_post_path %>
+                  </div>-->
                   <%= render 'comments/form', comment: @comment %>
                 </div>
               </div>

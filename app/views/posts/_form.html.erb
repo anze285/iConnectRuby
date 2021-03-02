@@ -13,22 +13,37 @@
     
   <%= form.text_field :user_id, :value => current_user.id, :type => "hidden" %>
   
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_area :description %>
-  </div>
+  <div class="password-main mt-5 mb-4">
+    <div class="password-content">
 
-  <%= form.fields_for :locations do |l| %>
-    <div class="field">
-      <%= l.label :title %>
-      <%= l.text_field :title %>
+      <%= form.fields_for :locations do |l| %>
+      <div class="field form-group row">
+        <%= l.label :title, :class => "col-sm-2 col-form-label col-form-label-sm pl-md-5" %>
+        <div class="col-sm-10">
+          <%= l.text_field :title, :class => "form-control mb-1 w-75 border bg-fafafa fs-1 ml-md-4 mx-auto" %>
+        </div>
+      </div>
+      <% end %>
+
+      <div class="field form-group row">
+        <%= form.label :description, :class => "col-sm-2 col-form-label col-form-label-sm pl-md-5" %>
+        <div class="col-sm-10">
+          <%= form.text_area :description, :class => "form-control mb-1 w-75 border bg-fafafa fs-1 ml-md-4 mx-auto" %>
+        </div>
+      </div>
+
+
+      <div class="field form-group row">
+        <%= form.label :Profile_image, :class => "col-sm-2 col-form-label col-form-label-sm pl-md-5" %>
+        <div class="col-sm-10">
+          <%= form.file_field :image, :required => true %>
+          <%= form.hidden_field :image_cache, :required => true %>
+        </div>
+      </div>
+      <div class="actions">
+        <%= form.submit "Post", :class => "btn btn-primary w-35 mb-2 fs-1 mt-0 font-weight-bolder bg-0095F6 p-1 first-button fs-2" %>
+      </div>
     </div>
-  <% end %>
-
-  <%= form.file_field :image, :required => true %>
-  <%= form.hidden_field :image_cache, :required => true %>
-
-  <div class="actions">
-    <%= form.submit %>
   </div>
 <% end %>
+
